@@ -1,13 +1,16 @@
 require 'byebug'
+require_relative './edge'
 require_relative './node'
 require_relative './adjacent'
 require_relative './dfs'
+
 class Graph
-  attr_reader :adjacency_lists, :directed
+  attr_reader :adjacency_lists, :directed, :edges
 
   def initialize(directed: true)
     @adjacency_lists = []
     @directed = directed
+    @edges = []
   end
 
   def add_node(id)
@@ -21,6 +24,7 @@ class Graph
 
   def add_edge(from, to, weight = nil)
     add_individual_edge(from, to, weight)
+    @edges << Edge.new(from, to, weight)
     unless directed
       add_individual_edge(to, from, weight)
     end

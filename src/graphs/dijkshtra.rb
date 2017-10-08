@@ -28,11 +28,11 @@ class Dijkshtra
       @visited << considered_node
       @distance[considered_node-1] = min_distance
     end
+  end
 
-    def to_s
-      print "visit-order: #{@visited}"
-      puts ""
-      print "distance-from-start-nodes: #{@distance}"
-    end
+  def to_s
+    print "visit-order: #{@visited}"
+    puts ""
+    print "distance-from-start-nodes: #{@distance}"
   end
 end
