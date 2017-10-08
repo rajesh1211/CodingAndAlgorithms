@@ -16,7 +16,11 @@ class Test
     graph.add_edge(2, 5, 2)
     graph.add_edge(4, 5, 1)
     graph.add_edge(3, 5, 4)
+    puts graph
+    g = graph.remove_edge(2, 5)
+    puts g
     puts graph.number_of_children(1)
+    puts graph.number_of_children(4)
     puts graph.has_cycle?
     puts ConnectedComponent.new(graph)
     puts Bfs.new(graph, 1)

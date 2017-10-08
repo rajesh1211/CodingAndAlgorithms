@@ -1,3 +1,4 @@
+require 'byebug'
 require_relative './node'
 require_relative './adjacent'
 require_relative './dfs'
@@ -42,12 +43,37 @@ class Graph
     children(node_id, sum, visited_nodes)
   end
 
+  def distance(node)
+    sum = 0
+    if node.parent != -1
+      if node.parent == nil
+        sum = -1
+      else
+        while(node.parent && node.parent != -1) do
+          sum = sum + 1
+          node = self[node.parent]
+        end
+      end
+    end
+    sum
+  end
+
+  def remove_edge(from, to)
+    graph = Marshal.load(Marshal.dump(self)) # deep copy
+    _remove_edge(graph, from, to)
+  end
+
+  def remove_edge!(from, to)
+    graph = self
+    _remove_edge(graph, from, to)
+  end
+
   def nodes
     @adjacency_lists.map {|adj_list| adj_list[:node]}
   end
 
   def [](id)
-    @adjacency_lists[id-1][:node]
+    @adjacency_lists[id-1][:node] if @adjacency_lists[id-1]
   end
 
   def to_s
@@ -83,5 +109,13 @@ class Graph
         end
       end
       sum
+    end
+
+    def _remove_edge(graph, from, to)
+      graph.adjacency_lists[from-1][:list] = graph.adjacency_lists[from-1][:list].delete_if { |adj| adj.node.id == to}
+      unless directed
+        graph.adjacency_lists[to-1][:list] = graph.adjacency_lists[to-1][:list].delete_if { |adj| adj.node.id == from}
+      end
+      graph
     end
 end

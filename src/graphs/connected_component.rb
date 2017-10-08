@@ -24,7 +24,11 @@ class ConnectedComponent
     end
   end
 
+  def components
+    @graph.adjacency_lists.map {|adj_list| adj_list[:node]}.group_by(&:color)
+  end
+
   def to_s
-    print @graph.adjacency_lists.map {|adj_list| adj_list[:node]}.group_by(&:color)
+    print components
   end
 end

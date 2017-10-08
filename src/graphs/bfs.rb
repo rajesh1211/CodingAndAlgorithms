@@ -1,5 +1,5 @@
 class Bfs
-  attr_reader :graph
+  attr_reader :graph, :visited
 
   def initialize(graph, start_node, fully_connected = true)
     @graph = graph
